@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.n11.devteam</groupId>
+    <artifactId>pomodoro-team</artifactId>
+    <packaging>war</packaging>
+    <version>1.0</version>
+    <name>Pomodoro for Teams</name>
+
+    <properties>
+        <junit.version>4.11</junit.version>
+        <atmosphere.version>2.0.3</atmosphere.version>
+        <jersey.version>1.17</jersey.version>
+    </properties>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Atmosphere -->
+        <dependency>
+            <groupId>org.atmosphere</groupId>
+            <artifactId>atmosphere-jersey</artifactId>
+            <version>${atmosphere.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.atmosphere.client</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${atmosphere.version}</version>
+            <type>war</type>
+        </dependency>
+
+        <!-- Jersey -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>pomodoro-team</finalName>
+    </build>
+
+</project>
