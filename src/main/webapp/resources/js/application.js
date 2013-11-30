@@ -1,6 +1,6 @@
 var STARTED_STATUS = 'Started';
 var STOPPED_STATUS = 'Stopped';
-var subscribedSocket;
+var SUBSCRIBED_SOCKET;
 
 /**
  * Constructor
@@ -23,7 +23,7 @@ $(function () {
         setStatusAndCounterByResponse(jQuery.parseJSON(response.responseBody));
     };
 
-    subscribedSocket = socket.subscribe(request);
+    SUBSCRIBED_SOCKET = socket.subscribe(request);
 
     bindEvents();
 
@@ -123,12 +123,12 @@ function stopButton() {
  * @param minute, minute for countdown
  */
 function pushStartedMessage(minute) {
-    subscribedSocket.push(jQuery.stringifyJSON({ developerId: '', minute: minute, status: STARTED_STATUS }));
+    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ developerId: '', minute: minute, status: STARTED_STATUS }));
 }
 
 /**
  * Push "Stopped" message
  */
 function pushStoppedMessage() {
-    subscribedSocket.push(jQuery.stringifyJSON({ developerId: '', status: STOPPED_STATUS }));
+    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ developerId: '', status: STOPPED_STATUS }));
 }

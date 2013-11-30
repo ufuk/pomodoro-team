@@ -4,21 +4,46 @@
     <meta charset="utf-8"/>
     <meta name="description" content="Pomodoro for Teams">
     <meta name="author" content="Ufuk Uzun">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Pomodoro for Teams</title>
 
     <script type="text/javascript" src="jquery/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="resources/js/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="resources/js/lib/jquery.countdown.js"></script>
     <script type="text/javascript" src="jquery/jquery.atmosphere.js"></script>
-    <script type="text/javascript" src="resources/javascript/library/jquery.countdown.js"></script>
-    <script type="text/javascript" src="resources/javascript/application.js"></script>
+    <script type="text/javascript" src="resources/js/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="resources/js/application.js"></script>
+
+    <link href="resources/css/bootstrap.css" rel="stylesheet">
+    <link href="resources/css/application.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Pomodoro for Teams</h2>
-    <div>
-        <button class="startButton" data-minute="25">Start</button>
-        <button class="startButton" data-minute="50">Start 2x</button>
-        <button id="stopButton" disabled="disabled">Stop</button>
-        <span id="timeLabel"></span>
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+            </ul>
+            <h3 class="text-muted">Pomodoro for Teams</h3>
+        </div>
+
+        <hr />
+
+        <div class="jumbotron">
+            <h1 id="timeLabel"></h1>
+            <button type="button" class="startButton btn btn-lg btn-primary" data-minute="25"><span class="glyphicon glyphicon-send"></span></button>
+            <button type="button" class="startButton btn btn-lg btn-primary" data-minute="50"><span class="glyphicon glyphicon-fire"></span></button>
+            <button type="button" class="startButton btn btn-lg btn-success" data-minute="5">Short Break</button>
+            <button type="button" class="startButton btn btn-lg btn-success" data-minute="15">Long Break</button>
+            <button type="button" id="stopButton" class="btn btn-lg btn-danger" disabled="disabled"><span class="glyphicon glyphicon-stop"></span></button>
+        </div>
+
+        <hr />
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit">Pomodoro for Teams by <a href="http://github.com/ufukuzun" target="_blank">ufukuzun</a></p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
