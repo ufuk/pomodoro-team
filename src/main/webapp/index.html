@@ -4,16 +4,19 @@
     <meta charset="utf-8"/>
     <meta name="description" content="Pomodoro for Teams">
     <meta name="author" content="Ufuk Uzun">
+
     <title>Pomodoro for Teams</title>
-    <script type="text/javascript" src="resources/javascript/library/jquery-2.0.3.js"></script>
-    <script type="text/javascript" src="resources/javascript/library/jquery.countdown.js"></script>
+
+    <script type="text/javascript" src="jquery/jquery-1.9.0.js"></script>
     <script type="text/javascript" src="jquery/jquery.atmosphere.js"></script>
+    <script type="text/javascript" src="resources/javascript/library/jquery.countdown.js"></script>
     <script type="text/javascript" src="resources/javascript/application.js"></script>
 </head>
 <body>
     <h2>Pomodoro for Teams</h2>
     <div>
-        <button id="startButton">Start</button>
+        <button class="startButton" data-minute="25">Start</button>
+        <button class="startButton" data-minute="50">Start 2x</button>
         <button id="stopButton" disabled="disabled">Stop</button>
         <span id="timeLabel"></span>
     </div>

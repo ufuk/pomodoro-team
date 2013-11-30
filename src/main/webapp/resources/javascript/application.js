@@ -1,3 +1,7 @@
+var STARTED_STATUS = 'Started';
+var STOPPED_STATUS = 'Stopped';
+var subscribedSocket;
+
 /**
  * Constructor
  */
@@ -19,9 +23,9 @@ $(function () {
         setStatusAndCounterByResponse(jQuery.parseJSON(response.responseBody));
     };
 
-    var subscribedSocket = socket.subscribe(request);
+    subscribedSocket = socket.subscribe(request);
 
-    bindEvents(subscribedSocket);
+    bindEvents();
 
     (function initCurrentStatus() {
         $.getJSON(document.location.toString() + 'pomodoro/currentStatus', function (response) {
@@ -36,20 +40,20 @@ $(function () {
  * @param json, pomodoro response
  */
 function setStatusAndCounterByResponse(json) {
-    var status = json['pomodoroStatus'];
-
     var $timeLabel = $('#timeLabel');
     var $startButton = startButton();
     var $stopButton = stopButton();
 
     var countdown = $timeLabel.data('countdown');
-    if (status == 'Started') {
+    var minute = json['minute'];
+    var status = json['status'];
+    if (status == STARTED_STATUS && minute) {
         $startButton.attr('disabled', 'disabled');
         $stopButton.removeAttr('disabled');
-        var updateTime = parseInt(json['statusUpdateTime']);
-        var now = parseInt(json['now']);
-        if (updateTime && now) {
-            var date = new Date(updateTime + (1000 * 60 * 25));
+        var updateTime = parseInt(json['updateTime']);
+        minute = parseInt(minute);
+        if (updateTime) {
+            var date = new Date(updateTime + (1000 * 60 * minute));
             if (countdown) {
                 $timeLabel.data('countdown').update(date).start();
             } else {
@@ -59,38 +63,37 @@ function setStatusAndCounterByResponse(json) {
                         $(this.el).text(this.leadingZeros(data.min, 2) + ":" + this.leadingZeros(data.sec, 2));
                     },
                     onEnd: function () {
-                        console.log("Countdown ended!");
+                        pushStoppedMessage();
                     }
                 });
             }
         }
-    } else if (status == 'Stopped') {
+    } else if (status == STOPPED_STATUS) {
         $stopButton.attr('disabled', 'disabled');
         $startButton.removeAttr('disabled');
         if (countdown) {
             countdown.stop();
         }
-        $timeLabel.text("25:00");
+        $timeLabel.text('00:00');
     }
 };
 
 /**
  * Bind events to related html element
- *
- * @param subscribedSocket
  */
-function bindEvents(subscribedSocket) {
+function bindEvents() {
     var $startButton = startButton();
     var $stopButton = stopButton();
 
     $startButton.click(function () {
-        subscribedSocket.push(jQuery.stringifyJSON({ developerId: "", pomodoroStatus: "Started" }));
-        $(this).attr('disabled', 'disabled');
+        var $that = $(this);
+        pushStartedMessage($that.data('minute'));
+        $that.attr('disabled', 'disabled');
         $stopButton.removeAttr('disabled');
     });
 
     $stopButton.click(function () {
-        subscribedSocket.push(jQuery.stringifyJSON({ developerId: "", pomodoroStatus: "Stopped" }));
+        pushStoppedMessage();
         $(this).attr('disabled', 'disabled');
         $startButton.removeAttr('disabled');
     });
@@ -102,7 +105,7 @@ function bindEvents(subscribedSocket) {
  * @returns {*|jQuery|HTMLElement}
  */
 function startButton() {
-    return $('#startButton');
+    return $('.startButton');
 };
 
 /**
@@ -113,3 +116,19 @@ function startButton() {
 function stopButton() {
     return $('#stopButton');
 };
+
+/**
+ * Push "Started" message
+ *
+ * @param minute, minute for countdown
+ */
+function pushStartedMessage(minute) {
+    subscribedSocket.push(jQuery.stringifyJSON({ developerId: '', minute: minute, status: STARTED_STATUS }));
+}
+
+/**
+ * Push "Stopped" message
+ */
+function pushStoppedMessage() {
+    subscribedSocket.push(jQuery.stringifyJSON({ developerId: '', status: STOPPED_STATUS }));
+}
