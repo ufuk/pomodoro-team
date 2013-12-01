@@ -22,8 +22,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse checkAuthKey(String authKey) {
-        if (authKey != null && pomodoroDB.findUserByAuthKey(authKey) != null) {
-            return AuthenticationResponse.createAuthenticatedResponse();
+        if (authKey != null) {
+            User user = pomodoroDB.findUserByAuthKey(authKey);
+            if (user != null) {
+                return AuthenticationResponse.createFor(user);
+            }
         }
         return AuthenticationResponse.createNotAuthenticatedResponse();
     }

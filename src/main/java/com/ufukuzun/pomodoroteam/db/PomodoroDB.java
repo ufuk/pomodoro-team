@@ -43,6 +43,10 @@ public final class PomodoroDB {
         return null;
     }
 
+    public List<User> getAllUsers() {
+        return USER_LIST;
+    }
+
     public void persistNewUser(User user) {
         USER_LIST.add(user);
     }

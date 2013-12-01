@@ -45,18 +45,15 @@ public class User {
     }
 
     public PomodoroState getPomodoroState() {
-        pomodoroState.setCurrentServerTime(new Date().getTime());
         return pomodoroState;
     }
 
     public void setPomodoroState(PomodoroState pomodoroState) {
-        pomodoroState.setAuthKey(lastAuthKey);
         this.pomodoroState = pomodoroState;
     }
 
     public void generateAuthKey() {
         lastAuthKey = "" + (userId + new Date().getTime() + password).hashCode();
-        pomodoroState.setAuthKey(lastAuthKey);
     }
 
 }

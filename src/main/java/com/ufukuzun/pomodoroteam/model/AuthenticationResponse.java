@@ -9,10 +9,13 @@ public class AuthenticationResponse {
 
     private String authKey;
 
+    private String userId;
+
     public static AuthenticationResponse createFor(User user) {
         AuthenticationResponse response = new AuthenticationResponse();
         response.setAuthenticated(true);
         response.setAuthKey(user.getLastAuthKey());
+        response.setUserId(user.getUserId());
         return response;
     }
 
@@ -42,6 +45,14 @@ public class AuthenticationResponse {
 
     public void setAuthKey(String authKey) {
         this.authKey = authKey;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

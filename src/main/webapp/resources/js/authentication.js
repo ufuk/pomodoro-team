@@ -14,7 +14,7 @@
                 if (authenticated == 'false') {
                     showLogInPopup();
                 } else {
-                    updateAuthKey(authKey);
+                    addCurrentUserIdAsClassToJumbotronContainer(json['userId']);
                     initCurrentState();
                 }
             }
@@ -33,16 +33,21 @@ function showLogInPopup() {
         var $passwordInput = $('#passwordInput');
 
         if ($usernameInput[0].checkValidity() && $passwordInput[0].checkValidity()) {
+            var userId = $usernameInput.val();
+            var password = $passwordInput.val();
             $.ajax({
                 type: 'POST', dataType: 'json', contentType: 'application/json; charset=utf-8',
                 url: document.location.toString() + 'pomodoro/logIn',
-                data: jQuery.stringifyJSON({userId: $usernameInput.val(), password: $passwordInput.val()}),
+                data: jQuery.stringifyJSON({userId: userId, password: password}),
                 success: function (json) {
                     var authenticated = json['authenticated'];
                     if (authenticated == 'true') {
                         updateAuthKey(json['authKey']);
+                        updateUserId(userId);
                         hideLogInPopup();
+                        addCurrentUserIdAsClassToJumbotronContainer(userId);
                         initCurrentState();
+                        pushStoppedMessage();
                     }
                 }
             });
@@ -51,6 +56,15 @@ function showLogInPopup() {
     $('#logInPopup').modal({keyboard: false, backdrop: 'static'});
     $('#logInPopup').modal('show');
 };
+
+/**
+ * Adds current user's userId as class to Jumbotron container
+ *
+ * @param userId, current user's userId
+ */
+function addCurrentUserIdAsClassToJumbotronContainer(userId) {
+    $('.jumbotron').addClass(userId);
+}
 
 /**
  * Hides log in popup
@@ -65,7 +79,7 @@ function hideLogInPopup() {
  * @param authKey, last authentication key for user
  */
 function updateAuthKey(authKey) {
-    $.cookie('authKey', authKey, { expires: 7, path: '/' });
+    $.cookie('authKey', authKey, { expires: 365, path: '/' });
 };
 
 /**
@@ -77,6 +91,23 @@ function getAuthKey() {
 };
 
 /**
+ * Updates username on cookie
+ *
+ * @param userId
+ */
+function updateUserId(userId) {
+    $.cookie('userId', userId, { expires: 365, path: '/' });
+};
+
+/**
+ * Gets current username key from cookie
+ */
+function getUserId() {
+    var userId = $.cookie('userId');
+    return userId;
+};
+
+/**
  * Inits current pomodoro state for all users
  */
 function initCurrentState() {
@@ -84,8 +115,12 @@ function initCurrentState() {
         type: 'POST', dataType: 'json', contentType: 'text/plain; charset=utf-8',
         url: document.location.toString() + 'pomodoro/currentStatus',
         data: getAuthKey(),
-        success: function (json) {
-            setStatusAndCounterByResponse(json);
+        success: function (jsonResponse) {
+            var singleStateResponse = jsonResponse['singleStateResponse'];
+            var array = singleStateResponse instanceof Array ? singleStateResponse : new Array(singleStateResponse);
+            array.forEach(function(each) {
+                setStatusAndCounterByResponse(each);
+            });
         }
     });
 };

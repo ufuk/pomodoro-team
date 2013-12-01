@@ -4,7 +4,6 @@
     <meta charset="utf-8"/>
     <meta name="description" content="Pomodoro for Teams">
     <meta name="author" content="Ufuk Uzun">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Pomodoro for Teams</title>
 
@@ -23,16 +22,20 @@
 
     <!-- Countdown Container -->
         <div class="jumbotron">
-            <h1 id="timeLabel"></h1>
+            <h1 class="timeLabel"></h1>
             <button type="button" class="startButton btn btn-lg btn-primary" data-minute="25"><span class="glyphicon glyphicon-send"></span></button>
             <button type="button" class="startButton btn btn-lg btn-primary" data-minute="50"><span class="glyphicon glyphicon-fire"></span></button>
             <button type="button" class="startButton btn btn-lg btn-success" data-minute="5">Short Break</button>
             <button type="button" class="startButton btn btn-lg btn-success" data-minute="15">Long Break</button>
-            <button type="button" id="stopButton" class="btn btn-lg btn-danger" disabled="disabled"><span class="glyphicon glyphicon-stop"></span></button>
+            <button type="button" class="stopButton btn btn-lg btn-danger" disabled="disabled"><span class="glyphicon glyphicon-stop"></span></button>
+        </div>
+
+    <!-- Other Users -->
+        <div class="row" id="usersContainer">
         </div>
         <hr />
 
-    <!-- Footer -->
+        <!-- Footer -->
         <div id="footer">
             <div class="container">
                 <p class="text-muted credit">Pomodoro for Teams by <a href="http://github.com/ufukuzun" target="_blank">ufukuzun</a></p>

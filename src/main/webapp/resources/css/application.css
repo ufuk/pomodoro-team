@@ -1,19 +1,28 @@
-@media (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .jumbotron h1 {
-        font-size: 180px;
-    }
+.container {
+    max-width: none !important;
+    width: 730px;
 }
 
 .jumbotron h1 {
     margin-top: -10px;
+    font-size: 180px;
 }
 
 .jumbotron {
     text-align: center;
+}
+
+#usersContainer h5 {
+    margin-top: -10px;
+    padding: 0px;
+    line-height: 1;
+    font-size: 110px;
+}
+
+#usersContainer h4 {
+    font-size: 30px;
+}
+
+#usersContainer h4 .glyphicon {
+    top: 3px;
 }
