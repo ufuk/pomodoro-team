@@ -3,30 +3,21 @@ package com.ufukuzun.pomodoroteam.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class PomodoroResponse {
+public class PomodoroState {
 
-    private String developerId;
+    private PomodoroStatus status = PomodoroStatus.Stopped;
 
-    private PomodoroStatus status;
-
-    private long updateTime;
+    private Long updateTime;
 
     private Integer minute;
 
-    public static PomodoroResponse createFor(PomodoroMessage message) {
-        PomodoroResponse response = new PomodoroResponse();
-        response.setDeveloperId(message.getDeveloperId());
-        response.setStatus(PomodoroStatus.valueOf(message.getStatus()));
-        response.setMinute(message.getMinute());
-        return response;
-    }
+    private String authKey;
 
-    public String getDeveloperId() {
-        return developerId;
-    }
-
-    public void setDeveloperId(String developerId) {
-        this.developerId = developerId;
+    public static PomodoroState createFor(PomodoroMessage message) {
+        PomodoroState state = new PomodoroState();
+        state.setStatus(PomodoroStatus.valueOf(message.getStatus()));
+        state.setMinute(message.getMinute());
+        return state;
     }
 
     public PomodoroStatus getStatus() {
@@ -37,11 +28,11 @@ public class PomodoroResponse {
         this.status = status;
     }
 
-    public long getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -59,6 +50,14 @@ public class PomodoroResponse {
 
     public boolean isStatusStopped() {
         return status == PomodoroStatus.Stopped;
+    }
+
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
     }
 
 }

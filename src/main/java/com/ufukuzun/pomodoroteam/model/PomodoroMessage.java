@@ -5,18 +5,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class PomodoroMessage {
 
-    private String developerId;
+    private String authKey;
 
     private String status;
 
     private Integer minute;
 
-    public String getDeveloperId() {
-        return developerId;
+    public String getAuthKey() {
+        return authKey;
     }
 
-    public void setDeveloperId(String developerId) {
-        this.developerId = developerId;
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
     }
 
     public String getStatus() {

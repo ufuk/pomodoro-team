@@ -2,7 +2,7 @@
  * Authentication checker
  */
 (function authenticate() {
-    var authKey = $.cookie('authKey');
+    var authKey = getAuthKey();
 
     if (authKey) {
         $.ajax({
@@ -15,6 +15,7 @@
                     showLogInPopup();
                 } else {
                     updateAuthKey(authKey);
+                    initCurrentState();
                 }
             }
         });
@@ -41,6 +42,7 @@ function showLogInPopup() {
                     if (authenticated == 'true') {
                         updateAuthKey(json['authKey']);
                         hideLogInPopup();
+                        initCurrentState();
                     }
                 }
             });
@@ -63,4 +65,26 @@ function hideLogInPopup() {
  */
 function updateAuthKey(authKey) {
     $.cookie('authKey', authKey, { expires: 7, path: '/' });
-}
+};
+
+/**
+ * Gets current authentication key from cookie
+ */
+function getAuthKey() {
+    var authKey = $.cookie('authKey');
+    return authKey;
+};
+
+/**
+ * Inits current pomodoro state for all users
+ */
+function initCurrentState() {
+    $.ajax({
+        type: 'POST', dataType: 'json', contentType: 'text/plain; charset=utf-8',
+        url: document.location.toString() + 'pomodoro/currentStatus',
+        data: getAuthKey(),
+        success: function (json) {
+            setStatusAndCounterByResponse(json);
+        }
+    });
+};

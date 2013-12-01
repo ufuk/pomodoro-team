@@ -20,18 +20,15 @@ $(function () {
     };
 
     request.onMessage = function (response) {
-        setStatusAndCounterByResponse(jQuery.parseJSON(response.responseBody));
+        var json = jQuery.parseJSON(response.responseBody);
+        if (getAuthKey() == json['authKey']) {
+            setStatusAndCounterByResponse(json);
+        }
     };
 
     SUBSCRIBED_SOCKET = socket.subscribe(request);
 
     bindEvents();
-
-    (function initCurrentStatus() {
-        $.getJSON(document.location.toString() + 'pomodoro/currentStatus', function (response) {
-            setStatusAndCounterByResponse(response);
-        });
-    })();
 });
 
 /**
@@ -123,12 +120,12 @@ function stopButton() {
  * @param minute, minute for countdown
  */
 function pushStartedMessage(minute) {
-    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ developerId: '', minute: minute, status: STARTED_STATUS }));
+    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ authKey: getAuthKey(), minute: minute, status: STARTED_STATUS }));
 }
 
 /**
  * Pushes "Stopped" message
  */
 function pushStoppedMessage() {
-    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ developerId: '', status: STOPPED_STATUS }));
+    SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ authKey: getAuthKey(), status: STOPPED_STATUS }));
 }

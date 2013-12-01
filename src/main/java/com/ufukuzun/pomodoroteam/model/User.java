@@ -10,6 +10,8 @@ public class User {
 
     private String lastAuthKey;
 
+    private PomodoroState pomodoroState = new PomodoroState();
+
     public static User createFor(LogInRequest request) {
         User user = new User();
         user.setUserId(request.getUserId());
@@ -42,8 +44,18 @@ public class User {
         this.lastAuthKey = lastAuthKey;
     }
 
+    public PomodoroState getPomodoroState() {
+        return pomodoroState;
+    }
+
+    public void setPomodoroState(PomodoroState pomodoroState) {
+        pomodoroState.setAuthKey(lastAuthKey);
+        this.pomodoroState = pomodoroState;
+    }
+
     public void generateAuthKey() {
         lastAuthKey = "" + (userId + new Date().getTime() + password).hashCode();
+        pomodoroState.setAuthKey(lastAuthKey);
     }
 
 }

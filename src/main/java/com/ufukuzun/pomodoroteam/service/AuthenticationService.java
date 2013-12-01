@@ -13,7 +13,6 @@ public class AuthenticationService {
         User user = pomodoroDB.findUserByUserIdAndPassword(request.getUserId(), request.getPassword());
         if (user != null) {
             user.generateAuthKey();
-            pomodoroDB.updateUser(user);
             return AuthenticationResponse.createFor(user);
         }
         user = User.createFor(request);
