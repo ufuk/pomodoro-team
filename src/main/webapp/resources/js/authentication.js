@@ -48,6 +48,7 @@ function showLogInPopup() {
             });
         }
     });
+    $('#logInPopup').modal({keyboard: false, backdrop: 'static'});
     $('#logInPopup').modal('show');
 };
 
