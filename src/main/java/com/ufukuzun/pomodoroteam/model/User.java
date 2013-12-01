@@ -45,6 +45,7 @@ public class User {
     }
 
     public PomodoroState getPomodoroState() {
+        pomodoroState.setCurrentServerTime(new Date().getTime());
         return pomodoroState;
     }
 

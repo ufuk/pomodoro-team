@@ -48,9 +48,10 @@ function setStatusAndCounterByResponse(json) {
         $startButton.attr('disabled', 'disabled');
         $stopButton.removeAttr('disabled');
         var updateTime = parseInt(json['updateTime']);
+        var timeDifference = parseInt(json['currentServerTime']) - new Date().getTime();
         minute = parseInt(minute);
         if (updateTime) {
-            var date = new Date(updateTime + (1000 * 60 * minute));
+            var date = new Date(updateTime + (1000 * 60 * minute) - timeDifference);
             if (countdown) {
                 $timeLabel.data('countdown').update(date).start();
             } else {

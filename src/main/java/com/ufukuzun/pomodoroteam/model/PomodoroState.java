@@ -1,6 +1,7 @@
 package com.ufukuzun.pomodoroteam.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 @XmlRootElement
 public class PomodoroState {
@@ -13,10 +14,13 @@ public class PomodoroState {
 
     private String authKey;
 
+    private long currentServerTime;
+
     public static PomodoroState createFor(PomodoroMessage message) {
         PomodoroState state = new PomodoroState();
         state.setStatus(PomodoroStatus.valueOf(message.getStatus()));
         state.setMinute(message.getMinute());
+        state.setCurrentServerTime(new Date().getTime());
         return state;
     }
 
@@ -58,6 +62,14 @@ public class PomodoroState {
 
     public void setAuthKey(String authKey) {
         this.authKey = authKey;
+    }
+
+    public long getCurrentServerTime() {
+        return currentServerTime;
+    }
+
+    public void setCurrentServerTime(long currentServerTime) {
+        this.currentServerTime = currentServerTime;
     }
 
 }
