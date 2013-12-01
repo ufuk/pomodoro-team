@@ -35,7 +35,7 @@ $(function () {
 });
 
 /**
- * Set status label and counter
+ * Sets status label and counter
  *
  * @param json, pomodoro response
  */
@@ -79,7 +79,7 @@ function setStatusAndCounterByResponse(json) {
 };
 
 /**
- * Bind events to related html element
+ * Binds events to related html element
  */
 function bindEvents() {
     var $startButton = startButton();
@@ -118,7 +118,7 @@ function stopButton() {
 };
 
 /**
- * Push "Started" message
+ * Pushes "Started" message
  *
  * @param minute, minute for countdown
  */
@@ -127,7 +127,7 @@ function pushStartedMessage(minute) {
 }
 
 /**
- * Push "Stopped" message
+ * Pushes "Stopped" message
  */
 function pushStoppedMessage() {
     SUBSCRIBED_SOCKET.push(jQuery.stringifyJSON({ developerId: '', status: STOPPED_STATUS }));

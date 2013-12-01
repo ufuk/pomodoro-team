@@ -1,17 +1,18 @@
-package com.ufukuzun.pomodoroteam;
+package com.ufukuzun.pomodoroteam.db;
 
 import com.ufukuzun.pomodoroteam.model.PomodoroResponse;
 import com.ufukuzun.pomodoroteam.model.PomodoroStatus;
+import com.ufukuzun.pomodoroteam.model.User;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class PomodoroDB {
 
     private static PomodoroDB instance;
 
     private final static Map<String, Object> dataMap = new HashMap<String, Object>();
+
+    private final static List<User> USER_LIST = new ArrayList<User>();
 
     private PomodoroDB() {
         dataMap.put("status", PomodoroStatus.Stopped);
@@ -43,6 +44,34 @@ public final class PomodoroDB {
             response.setUpdateTime(statusUpdateTime.getTime());
         }
         return response;
+    }
+
+    public User findUserByUserIdAndPassword(String userId, String password) {
+        for (User eachUser : USER_LIST) {
+            if (userId.equals(eachUser.getUserId()) && password.equals(eachUser.getPassword())) {
+                return eachUser;
+            }
+        }
+        return null;
+    }
+
+    public User findUserByAuthKey(String authKey) {
+        for (User eachUser : USER_LIST) {
+            if (authKey.equals(eachUser.getLastAuthKey())) {
+                return eachUser;
+            }
+        }
+        return null;
+    }
+
+    public void persistNewUser(User user) {
+        USER_LIST.add(user);
+    }
+
+    public void updateUser(User user) {
+        int index = USER_LIST.indexOf(user);
+        USER_LIST.remove(index);
+        USER_LIST.add(user);
     }
 
 }
