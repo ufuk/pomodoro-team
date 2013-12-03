@@ -6,7 +6,7 @@
     <groupId>com.ufukuzun</groupId>
     <artifactId>pomodoro-team</artifactId>
     <packaging>war</packaging>
-    <version>1.0.alpha</version>
+    <version>1.0.beta</version>
     <name>Pomodoro for Teams</name>
 
     <properties>

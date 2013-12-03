@@ -56,7 +56,7 @@ public class PomodoroBroadcaster {
     @POST
     @Path("/logIn")
     @Produces(MediaType.APPLICATION_JSON)
-    public AuthenticationResponse logIn(LogInRequest request) {
+    public AuthenticationResponse logIn(AuthenticationRequest request) {
         return authenticationService.logIn(request);
     }
 

@@ -1,18 +1,17 @@
 package com.ufukuzun.pomodoroteam.service;
 
 import com.ufukuzun.pomodoroteam.db.PomodoroDB;
+import com.ufukuzun.pomodoroteam.model.AuthenticationRequest;
 import com.ufukuzun.pomodoroteam.model.AuthenticationResponse;
-import com.ufukuzun.pomodoroteam.model.LogInRequest;
 import com.ufukuzun.pomodoroteam.model.User;
 
 public class AuthenticationService {
 
     private PomodoroDB pomodoroDB = PomodoroDB.connect();
 
-    public AuthenticationResponse logIn(LogInRequest request) {
+    public AuthenticationResponse logIn(AuthenticationRequest request) {
         User user = pomodoroDB.findUserByUserIdAndPassword(request.getUserId(), request.getPassword());
         if (user != null) {
-            user.generateAuthKey();
             return AuthenticationResponse.createFor(user);
         }
         user = User.createFor(request);

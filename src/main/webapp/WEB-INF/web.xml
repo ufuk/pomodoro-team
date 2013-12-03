@@ -19,7 +19,7 @@
             <param-value>application/json</param-value>
         </init-param>
         <load-on-startup>0</load-on-startup>
-        <async-supported>true</async-supported>
+        <async-supported>false</async-supported>
     </servlet>
 
     <servlet-mapping>

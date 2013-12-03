@@ -3,7 +3,7 @@ package com.ufukuzun.pomodoroteam.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class LogInRequest {
+public class AuthenticationRequest {
 
     private String userId;
 

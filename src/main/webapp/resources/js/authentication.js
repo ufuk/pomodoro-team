@@ -1,3 +1,6 @@
+var AUTHKEY_COOKIE_KEY = 'authKey';
+var USERID_COOKIE_KEY = 'userId';
+
 /**
  * Authentication checker
  */
@@ -7,11 +10,12 @@
     if (authKey) {
         $.ajax({
             type: 'POST', dataType: 'json', contentType: 'text/plain; charset=utf-8',
-            url: document.location.toString() + 'pomodoro/checkAuthKey',
+            url: BASE_URL + 'pomodoro/checkAuthKey',
             data: authKey,
             success: function (json) {
                 var authenticated = json['authenticated'];
                 if (authenticated == 'false') {
+                    clearCookies();
                     showLogInPopup();
                 } else {
                     addCurrentUserIdAsClassToJumbotronContainer(json['userId']);
@@ -37,7 +41,7 @@ function showLogInPopup() {
             var password = $passwordInput.val();
             $.ajax({
                 type: 'POST', dataType: 'json', contentType: 'application/json; charset=utf-8',
-                url: document.location.toString() + 'pomodoro/logIn',
+                url: BASE_URL + 'pomodoro/logIn',
                 data: jQuery.stringifyJSON({userId: userId, password: password}),
                 success: function (json) {
                     var authenticated = json['authenticated'];
@@ -47,7 +51,6 @@ function showLogInPopup() {
                         hideLogInPopup();
                         addCurrentUserIdAsClassToJumbotronContainer(userId);
                         initCurrentState();
-                        pushStoppedMessage();
                     }
                 }
             });
@@ -56,6 +59,23 @@ function showLogInPopup() {
     $('#logInPopup').modal({keyboard: false, backdrop: 'static'});
     $('#logInPopup').modal('show');
 };
+
+/**
+ * Logouts
+ */
+function logout() {
+    pushStoppedMessage();
+    clearCookies();
+    document.location = BASE_URL;
+}
+
+/**
+ * Clear cookies
+ */
+function clearCookies() {
+    $.removeCookie(AUTHKEY_COOKIE_KEY, { path: '/' });
+    $.removeCookie(USERID_COOKIE_KEY, { path: '/' });
+}
 
 /**
  * Adds current user's userId as class to Jumbotron container
@@ -79,7 +99,7 @@ function hideLogInPopup() {
  * @param authKey, last authentication key for user
  */
 function updateAuthKey(authKey) {
-    $.cookie('authKey', authKey, { expires: 365, path: '/' });
+    $.cookie(AUTHKEY_COOKIE_KEY, authKey, { expires: 365, path: '/' });
 };
 
 /**
@@ -96,14 +116,14 @@ function getAuthKey() {
  * @param userId
  */
 function updateUserId(userId) {
-    $.cookie('userId', userId, { expires: 365, path: '/' });
+    $.cookie(USERID_COOKIE_KEY, userId, { expires: 365, path: '/' });
 };
 
 /**
  * Gets current username key from cookie
  */
 function getUserId() {
-    var userId = $.cookie('userId');
+    var userId = $.cookie(USERID_COOKIE_KEY);
     return userId;
 };
 
@@ -111,16 +131,30 @@ function getUserId() {
  * Inits current pomodoro state for all users
  */
 function initCurrentState() {
+    toggleLogoutLink();
+
     $.ajax({
         type: 'POST', dataType: 'json', contentType: 'text/plain; charset=utf-8',
-        url: document.location.toString() + 'pomodoro/currentStatus',
+        url: BASE_URL + 'pomodoro/currentStatus',
         data: getAuthKey(),
         success: function (jsonResponse) {
             var singleStateResponse = jsonResponse['singleStateResponse'];
             var array = singleStateResponse instanceof Array ? singleStateResponse : new Array(singleStateResponse);
-            array.forEach(function(each) {
+            array.forEach(function (each) {
                 setStatusAndCounterByResponse(each);
             });
         }
     });
 };
+
+/**
+ * Shows logout link if authentication key exist, hides if not
+ */
+function toggleLogoutLink() {
+    var $logoutLink = $('#logoutLink');
+    if (getAuthKey()) {
+        $logoutLink.show();
+    } else {
+        $logoutLink.hide();
+    }
+}

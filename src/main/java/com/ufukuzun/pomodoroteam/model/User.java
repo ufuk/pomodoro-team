@@ -12,7 +12,7 @@ public class User {
 
     private PomodoroState pomodoroState = new PomodoroState();
 
-    public static User createFor(LogInRequest request) {
+    public static User createFor(AuthenticationRequest request) {
         User user = new User();
         user.setUserId(request.getUserId());
         user.setPassword(request.getPassword());

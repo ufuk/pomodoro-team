@@ -1,6 +1,7 @@
 var STARTED_STATUS = 'Started';
 var STOPPED_STATUS = 'Stopped';
 var SUBSCRIBED_SOCKET;
+var BASE_URL = document.location.origin + document.location.pathname;
 
 /**
  * Constructor
@@ -11,7 +12,7 @@ $(function () {
     var socket = $.atmosphere;
 
     var request = {
-        url: document.location.toString() + 'pomodoro',
+        url: BASE_URL + 'pomodoro',
         contentType: "application/json",
         logLevel: 'debug',
         transport: 'websocket',
@@ -21,7 +22,9 @@ $(function () {
 
     request.onMessage = function (response) {
         var json = jQuery.parseJSON(response.responseBody);
-        setStatusAndCounterByResponse(json);
+        if (getAuthKey()) {
+            setStatusAndCounterByResponse(json);
+        }
     };
 
     SUBSCRIBED_SOCKET = socket.subscribe(request);
@@ -49,7 +52,6 @@ function setStatusAndCounterByResponse(singleStateResponse) {
 
     var $stopButton = $('.' + userId + ' .stopButton');
     var countdown = $timeLabel.data('countdown');
-
 
     if (status == STARTED_STATUS && minute) {
         $startButton.attr('disabled', 'disabled');
@@ -143,6 +145,10 @@ function bindEvents() {
         pushStoppedMessage();
         $(this).attr('disabled', 'disabled');
         $startButton.removeAttr('disabled');
+    });
+
+    $('#logoutLink').click(function() {
+        logout();
     });
 };
 
