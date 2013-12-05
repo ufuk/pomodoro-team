@@ -2,6 +2,7 @@ var STARTED_STATUS = 'Started';
 var STOPPED_STATUS = 'Stopped';
 var SUBSCRIBED_SOCKET;
 var BASE_URL = document.location.origin + document.location.pathname;
+var BASE_WS_URL = document.location.origin + ':8000' + document.location.pathname;
 
 /**
  * Constructor
@@ -12,7 +13,7 @@ $(function () {
     var socket = $.atmosphere;
 
     var request = {
-        url: BASE_URL + 'pomodoro',
+        url: BASE_WS_URL + 'pomodoro',
         contentType: "application/json",
         logLevel: 'debug',
         transport: 'websocket',
