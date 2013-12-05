@@ -155,11 +155,15 @@ function bindEvents() {
     });
 
     $('#usernameInput').keypress(function (event) {
-        var typedChar = String.fromCharCode(event.keyCode || event.which).replace(/[^a-z0-9]/gi, '');
-        if (typedChar == "") {
+        var allowedChars = [8, 13, 9, 37, 39];
+        const charCode = event.keyCode || event.which;
+        var typedChar = String.fromCharCode(charCode).replace(/[^a-z0-9]/gi, '');
+        if (typedChar == "" && allowedChars.lastIndexOf(charCode) == -1) {
             event.preventDefault();
         }
-    });
+    }).bind('paste', function (event) {
+            event.preventDefault();
+        });
 
     $('#usernameInput, #passwordInput').keyup(function (event) {
         if ((event.keyCode || event.which) == 13) {
