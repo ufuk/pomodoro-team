@@ -131,7 +131,7 @@ function getUserId() {
  * Inits current pomodoro state for all users
  */
 function initCurrentState() {
-    toggleLogoutLink();
+    toggleUserMenu();
 
     $.ajax({
         type: 'POST', dataType: 'json', contentType: 'text/plain; charset=utf-8',
@@ -150,11 +150,12 @@ function initCurrentState() {
 /**
  * Shows logout link if authentication key exist, hides if not
  */
-function toggleLogoutLink() {
-    var $logoutLink = $('#logoutLink');
+function toggleUserMenu() {
+    var $userMenu = $('#userMenu');
     if (getAuthKey()) {
-        $logoutLink.show();
+        $('#usernameLabel').text('hello ' + getUserId() + ' | ');
+        $userMenu.show();
     } else {
-        $logoutLink.hide();
+        $userMenu.hide();
     }
 }

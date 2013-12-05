@@ -14,7 +14,10 @@
     <div class="container">
     <!-- Header -->
         <div class="header">
-            <a href="#" id="logoutLink" class="pull-right" style="display: none;">logout</a>
+            <div id="userMenu" class="pull-right" style="display: none;">
+                <span id="usernameLabel"></span>
+                <span id="logoutButton" class="glyphicon glyphicon-off"></span>
+            </div>
             <h3 class="text-muted">Pomodoro for Teams <small>beta</small></h3>
         </div>
         <hr />
@@ -22,10 +25,22 @@
     <!-- Countdown Container -->
         <div class="jumbotron">
             <h1 class="timeLabel"></h1>
-            <button type="button" class="startButton btn btn-lg btn-primary" data-minute="25"><span class="glyphicon glyphicon-send"></span></button>
-            <button type="button" class="startButton btn btn-lg btn-primary" data-minute="50"><span class="glyphicon glyphicon-fire"></span></button>
-            <button type="button" class="startButton btn btn-lg btn-success" data-minute="5">Short Break</button>
-            <button type="button" class="startButton btn btn-lg btn-success" data-minute="15">Long Break</button>
+            <button type="button" class="startButton btn btn-lg btn-primary tooltipMe" data-minute="25"
+                    data-toggle="tooltip" data-placement="bottom" data-original-title="25 minutes pomodoro">
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+            <button type="button" class="startButton btn btn-lg btn-primary tooltipMe" data-minute="50"
+                    data-toggle="tooltip" data-placement="bottom" data-original-title="50 minutes pomodoro">
+                <span class="glyphicon glyphicon-fire"></span>
+            </button>
+            <button type="button" class="startButton btn btn-lg btn-success tooltipMe" data-minute="5"
+                    data-toggle="tooltip" data-placement="bottom" data-original-title="5 minutes break">
+                Short Break
+            </button>
+            <button type="button" class="startButton btn btn-lg btn-success tooltipMe" data-minute="15"
+                    data-toggle="tooltip" data-placement="bottom" data-original-title="15 minutes break">
+                Long Break
+            </button>
             <button type="button" class="stopButton btn btn-lg btn-danger" disabled="disabled"><span class="glyphicon glyphicon-stop"></span></button>
         </div>
 

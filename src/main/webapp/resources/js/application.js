@@ -30,6 +30,8 @@ $(function () {
     SUBSCRIBED_SOCKET = socket.subscribe(request);
 
     bindEvents();
+
+    initBootstrapFunctionality();
 });
 
 /**
@@ -93,7 +95,7 @@ function setStatusAndCounterByResponse(singleStateResponse) {
 function appendAndUpdateUserContainer(userId, minute) {
     if ($('#usersContainer .' + userId).length == 0) {
         var $container = $('<div></div>');
-        $container.addClass('col-xs-6');
+        $container.addClass('col-xs-3');
         $container.addClass(userId);
 
         var $icon = $('<span></span>');
@@ -139,6 +141,7 @@ function bindEvents() {
         pushStartedMessage($that.data('minute'));
         $startButton.attr('disabled', 'disabled');
         $stopButton.removeAttr('disabled');
+        $('.tooltip').remove(); // FIXME because of firefox (or bootstrap), when button clicked removes tooltips manually
     });
 
     $stopButton.click(function () {
@@ -147,12 +150,12 @@ function bindEvents() {
         $startButton.removeAttr('disabled');
     });
 
-    $('#logoutLink').click(function () {
+    $('#logoutButton').click(function () {
         logout();
     });
 
     $('#usernameInput').keypress(function (event) {
-        var typedChar = String.fromCharCode(event.keyCode).replace(/[^a-z0-9]/gi, '');
+        var typedChar = String.fromCharCode(event.keyCode || event.which).replace(/[^a-z0-9]/gi, '');
         if (typedChar == "") {
             event.preventDefault();
         }
@@ -164,6 +167,13 @@ function bindEvents() {
         }
     });
 };
+
+/**
+ * Initializes Bootstrap's functionalities (such as tooltip, popover)
+ */
+function initBootstrapFunctionality() {
+    $('.tooltipMe').tooltip();
+}
 
 /**
  * Pushes "Started" message
