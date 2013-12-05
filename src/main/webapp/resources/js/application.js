@@ -147,8 +147,21 @@ function bindEvents() {
         $startButton.removeAttr('disabled');
     });
 
-    $('#logoutLink').click(function() {
+    $('#logoutLink').click(function () {
         logout();
+    });
+
+    $('#usernameInput').keypress(function (event) {
+        var typedChar = String.fromCharCode(event.keyCode).replace(/[^a-z0-9]/gi, '');
+        if (typedChar == "") {
+            event.preventDefault();
+        }
+    });
+
+    $('#usernameInput, #passwordInput').keyup(function (event) {
+        if ((event.keyCode || event.which) == 13) {
+            $('#logInButton').click();
+        }
     });
 };
 
