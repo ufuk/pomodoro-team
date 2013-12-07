@@ -72,7 +72,9 @@ function setStatusAndCounterByResponse(singleStateResponse) {
                         $(this.el).text(this.leadingZeros(data.min, 2) + ":" + this.leadingZeros(data.sec, 2));
                     },
                     onEnd: function () {
-                        pushStoppedMessage();
+                        if ($(this.el).parent().hasClass(getUserId())) {
+                            pushStoppedMessage();
+                        }
                     }
                 });
             }
