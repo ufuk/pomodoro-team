@@ -3,15 +3,11 @@ package com.ufukuzun.pomodoroteam.db;
 import com.ufukuzun.pomodoroteam.model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class PomodoroDB {
 
     private static PomodoroDB instance;
-
-    private final static Map<String, Object> dataMap = new HashMap<String, Object>();
 
     private final static List<User> USER_LIST = new ArrayList<User>();
 
