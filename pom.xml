@@ -13,6 +13,7 @@
         <junit.version>4.11</junit.version>
         <atmosphere.version>2.0.3</atmosphere.version>
         <jersey.version>1.17</jersey.version>
+        <jetty.plugin.version>8.1.14.v20131031</jetty.plugin.version>
     </properties>
 
     <dependencies>
@@ -48,6 +49,14 @@
 
     <build>
         <finalName>pomodoro-team</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.plugin.version}</version>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

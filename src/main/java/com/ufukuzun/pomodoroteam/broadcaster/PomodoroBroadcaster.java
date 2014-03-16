@@ -1,7 +1,9 @@
 package com.ufukuzun.pomodoroteam.broadcaster;
 
-import com.ufukuzun.pomodoroteam.db.PomodoroDB;
-import com.ufukuzun.pomodoroteam.model.*;
+import com.ufukuzun.pomodoroteam.model.AuthenticationRequest;
+import com.ufukuzun.pomodoroteam.model.AuthenticationResponse;
+import com.ufukuzun.pomodoroteam.model.PomodoroMessage;
+import com.ufukuzun.pomodoroteam.model.SingleStateResponse;
 import com.ufukuzun.pomodoroteam.service.AuthenticationService;
 import com.ufukuzun.pomodoroteam.service.PomodoroService;
 import org.atmosphere.annotation.Broadcast;
@@ -19,8 +21,6 @@ import java.util.List;
 @Path("/")
 @AtmosphereService(broadcaster = JerseyBroadcaster.class)
 public class PomodoroBroadcaster {
-
-    private PomodoroDB pomodoroDB = PomodoroDB.connect();
 
     private AuthenticationService authenticationService = new AuthenticationService();
 
